@@ -1,21 +1,11 @@
 import React, { useState } from 'react'
-import { getTodos, addTodo } from '../api/todoApi';
+import { getTodos } from '../api/todoApi';
 const ToDo = () => {
     const initialData = ['books', 'gadgets']
     const [listData, setListData] = useState(initialData);
-    const [todos, setTodos] = useState([]);
-    const [task, setTask] = useState('');
     const [addData, setAddData] = useState('');
     const [updateInx, setUpdateInx] = useState(null);
     // console.log(listData);
-
-    useEffect(() => {
-        loadTodos();
-    }, []);
-    const loadTodos = async () => {
-        const res = await getTodos();
-        setTodos(res.data);
-    };
 
     const handleDelete = (id) => {
         let updatedList = listData.filter((_, ind) => ind !== id);
@@ -29,8 +19,9 @@ const ToDo = () => {
         console.log('selectedItem :- ', selectedItem);
     }
     const handleAdd = () => {
-
-        if (!task) return;
+        console.log('clicked on add');
+        
+        if (!addData) return;
         if (updateInx !== null) {
             let updatedList = listData.map((item, ind) => ind === updateInx ? addData : item);
             setListData(updatedList);
